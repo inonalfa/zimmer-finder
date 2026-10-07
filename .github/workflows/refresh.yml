@@ -1,0 +1,34 @@
+name: Refresh data (optional)
+
+# Runs the network helper scripts (geocoding, drive times, photo download, ranking, validation) and commits
+# any change to data/. It does NOT search listing sites - that is your agent's job (see AGENTS.md).
+# To run it on a schedule, uncomment the "schedule" block.
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 5 * * *"   # every day at 05:00 UTC
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow
+      - run: python scripts/zf.py enrich
+        env:
+          ZF_USER_AGENT: zimmer-finder/1.0 (+https://github.com/${{ github.repository }})
+      - name: Commit changes
+        run: |
+          if [ -n "$(git status --porcelain data)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data
+            git commit -m "chore(data): refresh geocoding, drive times and photos"
+            git push
+          fi

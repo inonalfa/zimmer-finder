@@ -1,0 +1,6 @@
+dist
+node_modules
+data
+package-lock.json
+*.md
+integrations/base44/entities

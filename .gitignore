@@ -1,0 +1,19 @@
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.ruff_cache/
+.venv/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+# scratch files agents may create during a search
+tmp/
+*.tmp.json
+.tmp-*

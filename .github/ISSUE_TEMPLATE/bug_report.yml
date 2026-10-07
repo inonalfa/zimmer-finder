@@ -1,0 +1,24 @@
+name: Bug report
+description: Something in the app or the scripts does not work
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting! Please do not paste personal data, phone numbers or API keys.
+  - type: textarea
+    id: what
+    attributes: { label: What happened?, description: "And what did you expect?" }
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes: { label: Steps to reproduce, placeholder: "1. npm run dev\n2. Open the map\n3. ..." }
+    validations: { required: true }
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [Web app, Scripts (zf.py), AGENTS.md / agent flow, Deploy / GitHub Actions, Docs]
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes: { label: Environment, placeholder: "OS, browser, Node and Python versions, agent used" }

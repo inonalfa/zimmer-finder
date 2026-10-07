@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zimmer records",
+  "description": "data/zimmers.json: one record per rental unit found by the agent.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/zimmer" },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}" },
+    "url": { "type": "string", "pattern": "^(https?://|data/|\\./|/)" },
+    "zimmer": {
+      "type": "object",
+      "required": ["slug", "name"],
+      "additionalProperties": true,
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Stable unique key (lowercase, dashes). Used for votes and merges."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "region": { "type": "string" },
+        "town": { "type": "string" },
+        "unit": { "type": "string", "description": "Specific unit / suite inside the property" },
+        "description": { "type": "string" },
+        "summary": { "type": "string", "description": "2-4 sentence agent-written digest" },
+        "has_private_jacuzzi": { "type": "boolean" },
+        "jacuzzi_indoor": { "type": "boolean" },
+        "jacuzzi_outdoor": { "type": "boolean" },
+        "has_kitchen": { "type": "boolean" },
+        "has_bbq": { "type": "boolean" },
+        "has_view": { "type": "boolean" },
+        "has_pool": { "type": "boolean" },
+        "breakfast": { "type": "string" },
+        "privacy_notes": { "type": "string" },
+        "price_total": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Final total for the whole stay, incl. taxes and fees, in app.currency"
+        },
+        "price_estimate": { "type": "number", "minimum": 0, "description": "Rough total when no final price is known" },
+        "price_original": { "type": "number", "minimum": 0 },
+        "price_per_night": { "type": "number", "minimum": 0 },
+        "price_status": { "enum": ["verified", "estimated"] },
+        "price_checked_at": { "$ref": "#/$defs/date" },
+        "price_note": { "type": "string" },
+        "price_notes": { "type": "string" },
+        "price_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "total"],
+            "properties": { "date": { "$ref": "#/$defs/date" }, "total": { "type": "number" }, "source": { "type": "string" } }
+          }
+        },
+        "within_budget": { "type": "boolean" },
+        "availability_status": { "enum": ["verified", "unverified", "unavailable"] },
+        "availability_source": { "type": "string" },
+        "check_in": { "$ref": "#/$defs/date" },
+        "check_out": { "$ref": "#/$defs/date" },
+        "phone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "website_url": { "$ref": "#/$defs/url" },
+        "listing_url": { "$ref": "#/$defs/url" },
+        "alt_listing_url": { "$ref": "#/$defs/url" },
+        "image_urls": { "type": "array", "items": { "type": "string" } },
+        "thumb_urls": { "type": "array", "items": { "type": ["string", "null"] } },
+        "rating": { "type": "string" },
+        "rating_source": { "type": "string" },
+        "google_rating": { "type": "number", "minimum": 0, "maximum": 5 },
+        "google_review_count": { "type": "integer", "minimum": 0 },
+        "google_reviews_url": { "$ref": "#/$defs/url" },
+        "google_review_summary": { "type": "string" },
+        "booking_rating": { "type": "number", "minimum": 0, "maximum": 10 },
+        "booking_review_count": { "type": "integer", "minimum": 0 },
+        "airbnb_rating": { "type": "number", "minimum": 0, "maximum": 5 },
+        "airbnb_review_count": { "type": "integer", "minimum": 0 },
+        "review_links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+              "site": { "type": "string" },
+              "url": { "type": "string" },
+              "rating": { "type": "number" },
+              "count": { "type": "integer" }
+            }
+          }
+        },
+        "review_summary": { "type": "string" },
+        "review_red_flags": { "type": "string" },
+        "score": { "type": "number", "description": "Rank, 1 = best" },
+        "found_date": { "$ref": "#/$defs/date" },
+        "last_checked": { "$ref": "#/$defs/date" },
+        "added_at": { "type": "string" },
+        "is_active": { "type": "boolean" },
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lng": { "type": "number", "minimum": -180, "maximum": 180 },
+        "geo_note": { "type": "string" },
+        "drive_minutes": { "type": "number", "minimum": 0 },
+        "drive_km": { "type": "number", "minimum": 0 },
+        "notes": { "type": "string" },
+        "example": { "type": "boolean", "description": "true for the fake demo records" }
+      }
+    }
+  }
+}

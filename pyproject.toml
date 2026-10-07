@@ -1,0 +1,22 @@
+[project]
+name = "zimmer-finder-scripts"
+version = "1.0.0"
+description = "Helper scripts for Zimmer Finder (validate, merge, geocode, drive times, images, prices)"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+images = ["pillow>=10"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+src = ["scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["zflib", "zf"]

@@ -1,0 +1,248 @@
+// Zimmer entity for the optional Base44 backend. Public read, admin-only writes.
+{
+  "name": "Zimmer",
+  "type": "object",
+  "title": "Zimmer",
+  "description": "Rental unit found by the agent (same fields as schema/zimmer.schema.json)",
+  "properties": {
+    "slug": {
+      "type": "string",
+      "description": "Stable unique key (lowercase, dashes). Used for votes and merges."
+    },
+    "name": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "town": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Specific unit / suite inside the property"
+    },
+    "description": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "description": "2-4 sentence agent-written digest"
+    },
+    "has_private_jacuzzi": {
+      "type": "boolean"
+    },
+    "jacuzzi_indoor": {
+      "type": "boolean"
+    },
+    "jacuzzi_outdoor": {
+      "type": "boolean"
+    },
+    "has_kitchen": {
+      "type": "boolean"
+    },
+    "has_bbq": {
+      "type": "boolean"
+    },
+    "has_view": {
+      "type": "boolean"
+    },
+    "has_pool": {
+      "type": "boolean"
+    },
+    "breakfast": {
+      "type": "string"
+    },
+    "privacy_notes": {
+      "type": "string"
+    },
+    "price_total": {
+      "type": "number",
+      "description": "Final total for the whole stay, incl. taxes and fees, in app.currency"
+    },
+    "price_estimate": {
+      "type": "number",
+      "description": "Rough total when no final price is known"
+    },
+    "price_original": {
+      "type": "number"
+    },
+    "price_per_night": {
+      "type": "number"
+    },
+    "price_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "estimated"
+      ]
+    },
+    "price_checked_at": {
+      "type": "string"
+    },
+    "price_note": {
+      "type": "string"
+    },
+    "price_notes": {
+      "type": "string"
+    },
+    "price_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "within_budget": {
+      "type": "boolean"
+    },
+    "availability_status": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "unverified",
+        "unavailable"
+      ]
+    },
+    "availability_source": {
+      "type": "string"
+    },
+    "check_in": {
+      "type": "string"
+    },
+    "check_out": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "whatsapp": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "website_url": {
+      "type": "string"
+    },
+    "listing_url": {
+      "type": "string"
+    },
+    "alt_listing_url": {
+      "type": "string"
+    },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "thumb_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rating": {
+      "type": "string"
+    },
+    "rating_source": {
+      "type": "string"
+    },
+    "google_rating": {
+      "type": "number"
+    },
+    "google_review_count": {
+      "type": "number"
+    },
+    "google_reviews_url": {
+      "type": "string"
+    },
+    "google_review_summary": {
+      "type": "string"
+    },
+    "booking_rating": {
+      "type": "number"
+    },
+    "booking_review_count": {
+      "type": "number"
+    },
+    "airbnb_rating": {
+      "type": "number"
+    },
+    "airbnb_review_count": {
+      "type": "number"
+    },
+    "review_links": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "review_summary": {
+      "type": "string"
+    },
+    "review_red_flags": {
+      "type": "string"
+    },
+    "score": {
+      "type": "number",
+      "description": "Rank, 1 = best"
+    },
+    "found_date": {
+      "type": "string"
+    },
+    "last_checked": {
+      "type": "string"
+    },
+    "added_at": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "geo_note": {
+      "type": "string"
+    },
+    "drive_minutes": {
+      "type": "number"
+    },
+    "drive_km": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "example": {
+      "type": "boolean",
+      "description": "true for the fake demo records"
+    }
+  },
+  "required": [
+    "slug",
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": true,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

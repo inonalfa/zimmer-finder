@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "trip.config.json",
+  "type": "object",
+  "required": ["app", "trip", "origin", "region"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "app": {
+      "type": "object",
+      "required": ["title", "locale", "currency"],
+      "properties": {
+        "title": {
+          "type": ["string", "object"],
+          "description": "Text or { \"en\": ..., \"he\": ... }"
+        },
+        "subtitle": {
+          "type": ["string", "object"]
+        },
+        "locale": {
+          "enum": ["en", "he"],
+          "description": "UI language; he switches the layout to RTL"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217, e.g. ILS, EUR, USD"
+        },
+        "repo_url": {
+          "type": "string"
+        }
+      }
+    },
+    "trip": {
+      "type": "object",
+      "required": ["check_in", "check_out", "adults"],
+      "properties": {
+        "check_in": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "check_out": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "adults": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "children": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "max_total": {
+          "type": ["number", "null"],
+          "minimum": 0
+        }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lat": {
+          "type": ["number", "null"]
+        },
+        "lng": {
+          "type": ["number", "null"]
+        }
+      }
+    },
+    "region": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Za-z]{2}$"
+        },
+        "phone_country_code": {
+          "type": "string",
+          "pattern": "^\\d{1,3}$"
+        },
+        "mobile_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "areas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "map_center": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "map_zoom": {
+          "type": "number"
+        },
+        "max_drive_minutes": {
+          "type": "number"
+        }
+      }
+    },
+    "must_have": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "nice_to_have": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "storage": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "adapter": {
+              "enum": ["json", "base44"]
+            }
+          }
+        },
+        "votes": {
+          "type": "object",
+          "properties": {
+            "adapter": {
+              "enum": ["local", "supabase", "base44"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

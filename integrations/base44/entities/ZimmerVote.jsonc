@@ -1,0 +1,41 @@
+// ZimmerVote - shared like/unlike votes per zimmer. The app has no login, so votes are
+// keyed by (zimmer_slug, voter_name). Public read, admin-only writes:
+// visitors vote through the zimmer-vote backend function (service role), which
+// validates inputs. Caveat: anyone with the link can vote or change votes under any name.
+{
+  "name": "ZimmerVote",
+  "type": "object",
+  "title": "ZimmerVote",
+  "description": "Like / unlike vote of a named visitor for a zimmer",
+  "properties": {
+    "zimmer_slug": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "description": "Zimmer.slug the vote refers to"
+    },
+    "voter_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "description": "Display name chosen by the visitor (stored locally as identity)"
+    },
+    "vote": {
+      "type": "string",
+      "enum": ["like", "unlike"],
+      "description": "like or unlike"
+    },
+    "voted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time the vote was set"
+    }
+  },
+  "required": ["zimmer_slug", "voter_name", "vote"],
+  "rls": {
+    "create": { "user_condition": { "role": "admin" } },
+    "read": true,
+    "update": { "user_condition": { "role": "admin" } },
+    "delete": { "user_condition": { "role": "admin" } }
+  }
+}
