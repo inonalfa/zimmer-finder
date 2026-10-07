@@ -51,8 +51,9 @@ export function embedImages(records, root, { thumbsOnly = false } = {}) {
 // JSON inside <script type="application/json">: escape "<" so the data can never close the tag.
 export const safeJson = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
 
-export function injectData(html, records) {
-  const tag = `<script id="zimmer-data" type="application/json">${safeJson(records)}</script>`;
+export function injectData(html, records, prefs = null) {
+  let tag = `<script id="zimmer-data" type="application/json">${safeJson(records)}</script>`;
+  if (prefs) tag += `\n<script id="zimmer-prefs" type="application/json">${safeJson(prefs)}</script>`;
   return html.includes("</head>") ? html.replace("</head>", `${tag}\n</head>`) : tag + html;
 }
 
@@ -66,11 +67,13 @@ function main() {
     env: { ...process.env, BASE_PATH: "./" },
   });
   const html = readFileSync(resolve(ROOT, "dist-single/index.html"), "utf8");
-  let page = injectData(html, embedImages(records, ROOT, { thumbsOnly }));
+  const prefsFile = resolve(dirname(dataFile), "preferences.json");
+  const prefs = existsSync(prefsFile) ? JSON.parse(readFileSync(prefsFile, "utf8")) : null;
+  let page = injectData(html, embedImages(records, ROOT, { thumbsOnly }), prefs);
   if (!thumbsOnly && Buffer.byteLength(page) > maxBytes) {
     console.warn(`bundle is over ${maxBytes / 1048576} MB with full photos - using thumbnails only`);
     thumbsOnly = true;
-    page = injectData(html, embedImages(records, ROOT, { thumbsOnly }));
+    page = injectData(html, embedImages(records, ROOT, { thumbsOnly }), prefs);
   }
   writeFileSync(resolve(ROOT, "dist-single/index.html"), page);
   renameSync(resolve(ROOT, "dist-single/index.html"), out);

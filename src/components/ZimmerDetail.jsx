@@ -33,6 +33,7 @@ import RatingBadges from "./RatingBadges";
 import Gallery from "./Gallery";
 import AiSummary from "./AiSummary";
 import VoteBar from "./VoteBar";
+import { FitSection } from "./Fit";
 import {
   formatPrice,
   formatDate,
@@ -288,6 +289,9 @@ export default function ZimmerDetail({ z, onClose, voteInfo, onVote, myName, mat
 
             {/* AI SUMMARY (collapsed by default) - first content block */}
             <AiSummary text={z.summary} />
+
+            {/* personal fit from data/preferences.json */}
+            <FitSection z={z} />
 
             {/* quick actions: contact + shared votes */}
             <div className="flex flex-col gap-3">

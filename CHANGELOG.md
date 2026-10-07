@@ -3,6 +3,26 @@
 All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org).
 
+## [1.2.0] - 2026-10-07
+
+### Added
+- Taste profile that learns across trips: `data/preferences.json` (schema `schema/preferences.schema.json`)
+  with smoothed like / dislike weights per feature, for everyone and per voter, plus explicit notes.
+- `zf.py learn` (votes from `data/votes.json`, an exported file or the Supabase store), `zf.py taste`,
+  `zf.py archive` (moves a finished trip to `data/trips/<name>/`); `zf.py rank` writes `fit_score` and
+  `fit_reasons` and uses them in the default ranking (`--voter` for one person).
+- App: "Fits you" badge and top reasons on cards, "Why it fits you" on the detail page, sort by fit, and a
+  **Your taste** page (`?v=taste`, English and Hebrew) with an **Export votes** button.
+- The single-file bundle embeds the taste profile.
+- Records: `is_detached`, `near_host_house`, `fit_score`, `fit_reasons`.
+- Fake past trip and example profile; Python and JS tests; screenshots `taste*.png`, `card-fit*.png`,
+  `detail-fit*.png`.
+
+### Changed
+- `AGENTS.md`: read the profile at the start of a search and tell the user what was assumed; learn and
+  archive after voting.
+- `zf.py clear-example` also removes the fake past trip and the profile learned from it.
+
 ## [1.1.1] - 2026-10-07
 
 ### Added

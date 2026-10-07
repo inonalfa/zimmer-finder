@@ -31,4 +31,8 @@ describe("single-file bundle helpers", () => {
     expect(html).toMatch(/<script id="zimmer-data" type="application\/json">.*<\/script>\n<\/head>/);
     expect(html.match(/<\/script>/g)).toHaveLength(1);
   });
+  it("embeds the taste profile when there is one", () => {
+    const html = injectData("<head></head>", [], { profiles: { "*": {} } });
+    expect(html).toContain('<script id="zimmer-prefs" type="application/json">{"profiles":{"*":{}}}</script>');
+  });
 });

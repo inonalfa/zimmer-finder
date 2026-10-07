@@ -127,7 +127,7 @@ export function useVotes() {
     return n;
   }, [bySlug]);
 
-  return { infoFor, cast, myName, setMyName, myLikedCount, error, clearError: () => setError(null), refresh };
+  return { votes, infoFor, cast, myName, setMyName, myLikedCount, error, clearError: () => setError(null), refresh };
 }
 
 // Zimmer counts as "unliked" (dimmed / hidden by the filter) when I unliked it,

@@ -46,8 +46,25 @@ Details for each path are in [step 7](#7-deliver-the-app-mandatory).
 npm install                 # web app (Node 18+)
 python3 --version           # 3.10+; scripts are stdlib only
 pip install pillow          # optional, for thumbnails
-python3 scripts/zf.py clear-example --yes   # remove the fake demo records
+python3 scripts/zf.py clear-example --yes   # remove the fake demo records, past trip and taste profile
 ```
+
+## 0.5 Read the taste profile (start of every search)
+
+`data/preferences.json` (schema: `schema/preferences.schema.json`) is what this user liked and disliked on
+past trips. It is learned from votes, so it gets better every trip. At the start of a search:
+
+1. Run `python3 scripts/zf.py taste` (or read the file). It prints the strongest likes and dislikes, for
+   everyone (`*`) and per voter, plus the drive time and price per night they usually accept.
+2. Use it as defaults the request did not override: put strong likes (weight >= 1) into `nice_to_have`,
+   search those regions first, skip places with strong dislikes unless nothing else fits.
+3. **Tell the user what you assumed from past trips**, in one short line, so they can correct you. Example:
+   "From your past trips I assumed: detached unit, outdoor jacuzzi with a view, no place next to the hosts'
+   house, up to about 2.5 h drive. Say if this trip is different."
+4. If the user corrects you, save it: `python3 scripts/zf.py learn --feature near_host --weight -1.5 --note
+   "Hates being next to the hosts"` (`--voter NAME` for one person). Explicit notes win over learned weights.
+
+No file yet? Skip this step; the profile appears after the first trip with votes.
 
 ## 1. Read and update the config (before searching)
 
@@ -133,7 +150,9 @@ services: the scripts send a User-Agent, wait 1 second between geocoding calls a
 
 Rank by fit to `must_have` first, then `nice_to_have`, then review quality, price and drive time. Flag
 anything over `budget.max_total` (`within_budget: false`). `zf.py rank` gives a sensible default; feel free
-to set `score` yourself and explain why in `notes`.
+to set `score` yourself and explain why in `notes`. When `data/preferences.json` exists, `rank` also writes
+`fit_score` (0-100) and `fit_reasons` on every record (`--voter NAME` for one person's taste). The app shows
+them as "Fits you" on cards and "Why it fits you" on the detail page, and can sort by fit.
 
 Then **deliver the app (step 7)**. Your summary for the user goes next to the link: the top 3-5 with
 price, status and the main pro and con, what you could not verify, and which sources failed.
@@ -229,8 +248,22 @@ are converted to raw links automatically. The user's own fork works the same way
 Shared votes between two phones need the Supabase option ([docs/votes-supabase.md](docs/votes-supabase.md));
 without it votes stay in each browser.
 
+## 8. After the votes: learn, then archive
+
+When the user has voted (or says the trip is booked):
+
+1. Get the votes. Shared Supabase store: `python3 scripts/zf.py learn --from-store`. Local votes (the
+   default store, one browser): ask the user to open **Your taste** (`?v=taste`) and tap **Export votes**,
+   then `python3 scripts/zf.py learn --votes votes.json`. Votes in `data/votes.json` are read by default.
+2. `learn` keeps every observation and recomputes the weights, so running it twice is harmless.
+3. Archive the trip so the next search starts clean but remembers it:
+   `python3 scripts/zf.py archive --votes votes.json` (moves records, photos and votes to
+   `data/trips/<check_in>-<name>/`). Commit `data/preferences.json` and `data/trips/`.
+4. Tell the user in one line what the profile learned (`zf.py taste` prints it).
+
 ## Checklist before you finish
 
+- [ ] You read `data/preferences.json` (if any) and told the user what you assumed from past trips
 - [ ] `trip.config.json` matches the request (absolute dates, budget, guests, origin, language)
 - [ ] `python3 scripts/zf.py validate` prints 0 problems
 - [ ] The app is delivered (path A, B or C) and your final message has the link or the attached file

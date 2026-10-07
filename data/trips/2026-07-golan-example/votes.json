@@ -1,0 +1,62 @@
+[
+  {
+    "zimmer_slug": "example-past-pine-hut",
+    "voter_name": "Dana",
+    "vote": "like",
+    "updated_at": "2026-07-04T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-pine-hut",
+    "voter_name": "Noam",
+    "vote": "like",
+    "updated_at": "2026-07-04T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-river-suite",
+    "voter_name": "Dana",
+    "vote": "unlike",
+    "updated_at": "2026-07-05T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-river-suite",
+    "voter_name": "Noam",
+    "vote": "unlike",
+    "updated_at": "2026-07-05T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-stone-loft",
+    "voter_name": "Dana",
+    "vote": "like",
+    "updated_at": "2026-07-06T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-stone-loft",
+    "voter_name": "Noam",
+    "vote": "like",
+    "updated_at": "2026-07-06T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-garden-room",
+    "voter_name": "Dana",
+    "vote": "unlike",
+    "updated_at": "2026-07-07T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-garden-room",
+    "voter_name": "Noam",
+    "vote": "like",
+    "updated_at": "2026-07-07T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-cliff-cabin",
+    "voter_name": "Dana",
+    "vote": "like",
+    "updated_at": "2026-07-03T19:00:00Z"
+  },
+  {
+    "zimmer_slug": "example-past-meadow-studio",
+    "voter_name": "Noam",
+    "vote": "unlike",
+    "updated_at": "2026-07-04T19:00:00Z"
+  }
+]

@@ -1,0 +1,1382 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-20T09:30:00Z",
+  "trips": [
+    "2026-07-golan-example"
+  ],
+  "voters": [
+    "Dana",
+    "Noam"
+  ],
+  "profiles": {
+    "*": {
+      "votes": 10,
+      "likes": 6,
+      "unlikes": 4,
+      "features": {
+        "both_jacuzzi": {
+          "weight": 0.81,
+          "confidence": 0.42,
+          "liked_with": 2,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "detached": {
+          "weight": 1.5,
+          "confidence": 0.83,
+          "liked_with": 5,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_indoor": {
+          "weight": -0.51,
+          "confidence": 0.83,
+          "liked_with": 3,
+          "liked_total": 6,
+          "unliked_with": 4,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_outdoor": {
+          "weight": 1.5,
+          "confidence": 0.83,
+          "liked_with": 5,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "kitchen": {
+          "weight": 0.05,
+          "confidence": 0.83,
+          "liked_with": 6,
+          "liked_total": 6,
+          "unliked_with": 4,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "long_drive": {
+          "weight": -0.29,
+          "confidence": 0.83,
+          "liked_with": 2,
+          "liked_total": 6,
+          "unliked_with": 2,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "near_host": {
+          "weight": -0.98,
+          "confidence": 0.83,
+          "liked_with": 1,
+          "liked_total": 6,
+          "unliked_with": 3,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "pool": {
+          "weight": 0.41,
+          "confidence": 0.21,
+          "liked_with": 1,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "red_flags": {
+          "weight": -0.69,
+          "confidence": 0.62,
+          "liked_with": 1,
+          "liked_total": 6,
+          "unliked_with": 2,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "region:Golan Heights": {
+          "weight": 1.5,
+          "confidence": 0.83,
+          "liked_with": 5,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "region:Upper Galilee": {
+          "weight": -1.2,
+          "confidence": 0.83,
+          "liked_with": 1,
+          "liked_total": 6,
+          "unliked_with": 4,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "view": {
+          "weight": 1.5,
+          "confidence": 0.83,
+          "liked_with": 5,
+          "liked_total": 6,
+          "unliked_with": 0,
+          "unliked_total": 4,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        }
+      },
+      "numeric": {
+        "price_per_night": {
+          "liked_avg": 1128,
+          "liked_max": 1300,
+          "unliked_avg": 908,
+          "sensitivity": -0.19
+        },
+        "drive_minutes": {
+          "liked_max": 160,
+          "liked_avg": 143
+        }
+      }
+    },
+    "Dana": {
+      "votes": 5,
+      "likes": 3,
+      "unlikes": 2,
+      "features": {
+        "both_jacuzzi": {
+          "weight": 0.47,
+          "confidence": 0.1,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "detached": {
+          "weight": 1.16,
+          "confidence": 0.31,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_indoor": {
+          "weight": -0.63,
+          "confidence": 0.31,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_outdoor": {
+          "weight": 1.16,
+          "confidence": 0.31,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "kitchen": {
+          "weight": 0.06,
+          "confidence": 0.42,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "long_drive": {
+          "weight": -0.22,
+          "confidence": 0.21,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 1,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "near_host": {
+          "weight": -1.32,
+          "confidence": 0.21,
+          "liked_with": 0,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "pool": {
+          "weight": 0.47,
+          "confidence": 0.1,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "red_flags": {
+          "weight": -0.22,
+          "confidence": 0.21,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 1,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "region:Golan Heights": {
+          "weight": 1.16,
+          "confidence": 0.31,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        },
+        "region:Upper Galilee": {
+          "weight": -1.32,
+          "confidence": 0.21,
+          "liked_with": 0,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Dana",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "view": {
+          "weight": 1.16,
+          "confidence": 0.31,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-cliff-cabin",
+              "name": "Cliff Cabin (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Dana",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Dana",
+              "vote": "like"
+            }
+          ]
+        }
+      },
+      "numeric": {
+        "price_per_night": {
+          "liked_avg": 1200,
+          "liked_max": 1300,
+          "unliked_avg": 917,
+          "sensitivity": -0.24
+        },
+        "drive_minutes": {
+          "liked_max": 160,
+          "liked_avg": 144
+        }
+      }
+    },
+    "Noam": {
+      "votes": 5,
+      "likes": 3,
+      "unlikes": 2,
+      "features": {
+        "both_jacuzzi": {
+          "weight": 0.47,
+          "confidence": 0.1,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "detached": {
+          "weight": 0.88,
+          "confidence": 0.21,
+          "liked_with": 2,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_indoor": {
+          "weight": -0.22,
+          "confidence": 0.42,
+          "liked_with": 2,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "jacuzzi_outdoor": {
+          "weight": 0.88,
+          "confidence": 0.21,
+          "liked_with": 2,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "kitchen": {
+          "weight": 0.06,
+          "confidence": 0.42,
+          "liked_with": 3,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "long_drive": {
+          "weight": -0.22,
+          "confidence": 0.21,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 1,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "near_host": {
+          "weight": -0.22,
+          "confidence": 0.21,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 1,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "red_flags": {
+          "weight": -0.92,
+          "confidence": 0.1,
+          "liked_with": 0,
+          "liked_total": 3,
+          "unliked_with": 1,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "region:Golan Heights": {
+          "weight": 0.88,
+          "confidence": 0.21,
+          "liked_with": 2,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        },
+        "region:Upper Galilee": {
+          "weight": -0.63,
+          "confidence": 0.31,
+          "liked_with": 1,
+          "liked_total": 3,
+          "unliked_with": 2,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-garden-room",
+              "name": "Garden Room (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-meadow-studio",
+              "name": "Meadow Studio (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-river-suite",
+              "name": "River Suite (example)",
+              "voter": "Noam",
+              "vote": "unlike"
+            }
+          ]
+        },
+        "view": {
+          "weight": 0.88,
+          "confidence": 0.21,
+          "liked_with": 2,
+          "liked_total": 3,
+          "unliked_with": 0,
+          "unliked_total": 2,
+          "evidence": [
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-pine-hut",
+              "name": "Pine Hut (example)",
+              "voter": "Noam",
+              "vote": "like"
+            },
+            {
+              "trip": "2026-07-golan-example",
+              "slug": "example-past-stone-loft",
+              "name": "Stone Loft (example)",
+              "voter": "Noam",
+              "vote": "like"
+            }
+          ]
+        }
+      },
+      "numeric": {
+        "price_per_night": {
+          "liked_avg": 1056,
+          "liked_max": 1200,
+          "unliked_avg": 900,
+          "sensitivity": -0.15
+        },
+        "drive_minutes": {
+          "liked_max": 152,
+          "liked_avg": 141
+        }
+      }
+    }
+  },
+  "explicit": [
+    {
+      "voter": "*",
+      "added_at": "2026-10-07T12:36:52Z",
+      "feature": "near_host",
+      "weight": -1.0,
+      "note": "We don't like staying right next to the hosts' house (example note)",
+      "example": true
+    }
+  ],
+  "observations": [
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-cliff-cabin",
+      "name": "Cliff Cabin (example)",
+      "voter": "Dana",
+      "vote": "like",
+      "features": [
+        "jacuzzi_outdoor",
+        "view",
+        "pool",
+        "kitchen",
+        "detached",
+        "red_flags",
+        "long_drive",
+        "region:Golan Heights"
+      ],
+      "price_per_night": 1300,
+      "drive_minutes": 160
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-garden-room",
+      "name": "Garden Room (example)",
+      "voter": "Dana",
+      "vote": "unlike",
+      "features": [
+        "jacuzzi_indoor",
+        "kitchen",
+        "near_host",
+        "long_drive",
+        "region:Upper Galilee"
+      ],
+      "price_per_night": 867,
+      "drive_minutes": 152
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-garden-room",
+      "name": "Garden Room (example)",
+      "voter": "Noam",
+      "vote": "like",
+      "features": [
+        "jacuzzi_indoor",
+        "kitchen",
+        "near_host",
+        "long_drive",
+        "region:Upper Galilee"
+      ],
+      "price_per_night": 867,
+      "drive_minutes": 152
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-meadow-studio",
+      "name": "Meadow Studio (example)",
+      "voter": "Noam",
+      "vote": "unlike",
+      "features": [
+        "jacuzzi_indoor",
+        "kitchen",
+        "long_drive",
+        "region:Upper Galilee"
+      ],
+      "price_per_night": 833,
+      "drive_minutes": 168
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-pine-hut",
+      "name": "Pine Hut (example)",
+      "voter": "Dana",
+      "vote": "like",
+      "features": [
+        "jacuzzi_outdoor",
+        "view",
+        "kitchen",
+        "detached",
+        "region:Golan Heights"
+      ],
+      "price_per_night": 1100,
+      "drive_minutes": 128
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-pine-hut",
+      "name": "Pine Hut (example)",
+      "voter": "Noam",
+      "vote": "like",
+      "features": [
+        "jacuzzi_outdoor",
+        "view",
+        "kitchen",
+        "detached",
+        "region:Golan Heights"
+      ],
+      "price_per_night": 1100,
+      "drive_minutes": 128
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-river-suite",
+      "name": "River Suite (example)",
+      "voter": "Dana",
+      "vote": "unlike",
+      "features": [
+        "jacuzzi_indoor",
+        "kitchen",
+        "near_host",
+        "red_flags",
+        "region:Upper Galilee"
+      ],
+      "price_per_night": 967,
+      "drive_minutes": 136
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-river-suite",
+      "name": "River Suite (example)",
+      "voter": "Noam",
+      "vote": "unlike",
+      "features": [
+        "jacuzzi_indoor",
+        "kitchen",
+        "near_host",
+        "red_flags",
+        "region:Upper Galilee"
+      ],
+      "price_per_night": 967,
+      "drive_minutes": 136
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-stone-loft",
+      "name": "Stone Loft (example)",
+      "voter": "Dana",
+      "vote": "like",
+      "features": [
+        "jacuzzi_indoor",
+        "jacuzzi_outdoor",
+        "both_jacuzzi",
+        "view",
+        "kitchen",
+        "detached",
+        "region:Golan Heights"
+      ],
+      "price_per_night": 1200,
+      "drive_minutes": 144
+    },
+    {
+      "trip": "2026-07-golan-example",
+      "slug": "example-past-stone-loft",
+      "name": "Stone Loft (example)",
+      "voter": "Noam",
+      "vote": "like",
+      "features": [
+        "jacuzzi_indoor",
+        "jacuzzi_outdoor",
+        "both_jacuzzi",
+        "view",
+        "kitchen",
+        "detached",
+        "region:Golan Heights"
+      ],
+      "price_per_night": 1200,
+      "drive_minutes": 144
+    }
+  ]
+}

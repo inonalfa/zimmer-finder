@@ -1,0 +1,76 @@
+{
+  "$schema": "./schema/trip.config.schema.json",
+  "app": {
+    "title": {
+      "en": "Zimmer Finder",
+      "he": "מחפש הצימרים"
+    },
+    "subtitle": {
+      "en": "Cabins with a private jacuzzi - prices, availability and reviews",
+      "he": "צימרים עם ג'קוזי - מחירים, זמינות וביקורות"
+    },
+    "locale": "en",
+    "currency": "ILS",
+    "repo_url": "https://github.com/inonalfa/zimmer-finder"
+  },
+  "trip": {
+    "check_in": "2026-07-16",
+    "check_out": "2026-07-19",
+    "adults": 2,
+    "children": 0
+  },
+  "budget": {
+    "max_total": 4500
+  },
+  "origin": {
+    "name": "Tel Aviv",
+    "lat": 32.0853,
+    "lng": 34.7818
+  },
+  "region": {
+    "country": "Israel",
+    "country_code": "IL",
+    "phone_country_code": "972",
+    "mobile_prefixes": [
+      "5"
+    ],
+    "areas": [
+      "Upper Galilee",
+      "Golan Heights",
+      "Western Galilee",
+      "Carmel"
+    ],
+    "map_center": [
+      32.9,
+      35.4
+    ],
+    "map_zoom": 8,
+    "max_drive_minutes": 180
+  },
+  "must_have": [
+    "private jacuzzi",
+    "kitchen or kitchenette",
+    "privacy (not overlooked by neighbours)"
+  ],
+  "nice_to_have": [
+    "indoor and outdoor jacuzzi",
+    "BBQ",
+    "view",
+    "private pool"
+  ],
+  "sources": [
+    "airbnb",
+    "booking",
+    "local listing sites",
+    "google maps reviews"
+  ],
+  "storage": {
+    "data": {
+      "adapter": "json",
+      "url": "data/zimmers.json"
+    },
+    "votes": {
+      "adapter": "local"
+    }
+  }
+}

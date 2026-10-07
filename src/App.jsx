@@ -1,5 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from "react";
-import { loadAll, saveCustom, clearCustom } from "@/storage/data";
+import { loadAll, saveCustom, clearCustom, loadPreferences } from "@/storage/data";
+import TasteView from "@/components/TasteView";
+import { hasFit } from "@/lib/fit";
 import LoadDataDialog from "@/components/LoadDataDialog";
 import {
   CalendarDays,
@@ -16,6 +18,7 @@ import {
   Map as MapIcon,
   ChevronDown,
   Upload,
+  Sparkles,
 } from "lucide-react";
 import ZimmerCard from "@/components/ZimmerCard";
 import ZimmerDetail from "@/components/ZimmerDetail";
@@ -43,7 +46,7 @@ const DEFAULT_VOTE_FILTER = "hide_unliked";
 const params = () => new URLSearchParams(window.location.search);
 const viewFromPath = () => {
   const v = params().get("v");
-  return v === "gallery" || v === "map" ? v : "list";
+  return v === "gallery" || v === "map" || v === "taste" ? v : "list";
 };
 const urlFor = (v, extra = {}) => {
   const q = params();
@@ -78,6 +81,7 @@ function Toggle({ checked, onChange, label }) {
 
 export default function App() {
   const [items, setItems] = useState([]);
+  const [prefs, setPrefs] = useState(null); // data/preferences.json (learned taste), optional
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dataInfo, setDataInfo] = useState({ source: "default" }); // where the records came from
@@ -88,7 +92,7 @@ export default function App() {
   const [maxPrice, setMaxPrice] = useState(null);
   const [bothJacuzzi, setBothJacuzzi] = useState(false);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
-  const [sortBy, setSortBy] = useState("recommended"); // recommended | drive | price
+  const [sortBy, setSortBy] = useState("recommended"); // recommended | fit | drive | price
   const [maxDrive, setMaxDrive] = useState(0); // minutes, 0 = no limit
   const [showSold, setShowSold] = useState(false);
   const [baseline] = useState(newBaseline); // "New" = added after the last visit (first visit: last 3 days)
@@ -116,7 +120,7 @@ export default function App() {
     window.scrollTo({ top: 0 });
   };
 
-  const { infoFor, cast, myName, setMyName, myLikedCount, error: voteError, clearError } = useVotes();
+  const { votes, infoFor, cast, myName, setMyName, myLikedCount, error: voteError, clearError } = useVotes();
   const [nameDialog, setNameDialog] = useState(null); // null | { slug, vote } | { rename: true }
 
   const voteFor = (slug) => (vote) => {
@@ -143,6 +147,7 @@ export default function App() {
     (async () => {
       try {
         const r = await loadAll();
+        loadPreferences().then(setPrefs);
         setItems(r.records);
         setDataInfo({ source: r.source, label: r.label });
       } catch (e) {
@@ -210,7 +215,14 @@ export default function App() {
   );
 
   const filtered = useMemo(() => {
-    const key = sortBy === "drive" ? (z) => num(z.drive_minutes) : sortBy === "price" ? (z) => num(finalPrice(z)) : () => 0;
+    const key =
+      sortBy === "fit"
+        ? (z) => -(hasFit(z) ? z.fit_score : -1)
+        : sortBy === "drive"
+          ? (z) => num(z.drive_minutes)
+          : sortBy === "price"
+            ? (z) => num(finalPrice(z))
+            : () => 0;
     return (
       baseFiltered
         .filter((z) => !isSoldOut(z))
@@ -318,6 +330,7 @@ export default function App() {
                   ["list", t("List"), LayoutGrid],
                   ["gallery", t("Gallery"), Images],
                   ["map", t("Map"), MapIcon],
+                  ["taste", t("Your taste"), Sparkles],
                 ].map(([v, label, Icon]) => (
                   <button
                     key={v}
@@ -400,7 +413,7 @@ export default function App() {
           </div>
         )}
         {/* Filters */}
-        <div className="mb-6 rounded-2xl border border-stone-200/70 bg-white p-4 shadow-sm">
+        <div className={`mb-6 rounded-2xl border border-stone-200/70 bg-white p-4 shadow-sm ${view === "taste" ? "hidden" : ""}`}>
           <div className="flex items-center justify-between sm:hidden">
             <button
               onClick={() => setShowFilters((s) => !s)}
@@ -468,6 +481,7 @@ export default function App() {
                 className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
               >
                 <option value="recommended">{t("Recommended")}</option>
+                {items.some(hasFit) && <option value="fit">{t("Fits you best")}</option>}
                 <option value="drive">
                   {config.origin.name ? t("Drive time from {origin}", { origin: config.origin.name }) : t("Drive time")}
                 </option>
@@ -520,6 +534,8 @@ export default function App() {
           </div>
         ) : error ? (
           <p className="py-24 text-center text-red-700">{error}</p>
+        ) : view === "taste" ? (
+          <TasteView prefs={prefs} votes={votes} tripId={config.storage?.votes?.trip_id} />
         ) : view === "map" ? (
           <Suspense
             fallback={

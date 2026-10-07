@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data/preferences.json",
+  "description": "Learned taste profile, kept across trips. Written by `zf.py learn`; read by the agent, `zf.py rank` and the app.",
+  "type": "object",
+  "required": ["version", "updated_at", "profiles", "observations"],
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "required": ["weight", "confidence"],
+      "properties": {
+        "weight": {
+          "type": "number",
+          "minimum": -2,
+          "maximum": 2,
+          "description": "ln(P(f|liked)/P(f|disliked)), add-one smoothing; >0 wanted, <0 avoided"
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "liked_with": { "type": "integer" },
+        "liked_total": { "type": "integer" },
+        "unliked_with": { "type": "integer" },
+        "unliked_total": { "type": "integer" },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["trip", "slug", "voter", "vote"],
+            "properties": {
+              "trip": { "type": "string" },
+              "slug": { "type": "string" },
+              "name": { "type": "string" },
+              "voter": { "type": "string" },
+              "vote": { "enum": ["like", "unlike"] }
+            }
+          }
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "required": ["votes", "features"],
+      "properties": {
+        "votes": { "type": "integer" },
+        "likes": { "type": "integer" },
+        "unlikes": { "type": "integer" },
+        "features": { "type": "object", "additionalProperties": { "$ref": "#/$defs/feature" } },
+        "numeric": { "type": "object" }
+      }
+    }
+  },
+  "properties": {
+    "version": { "type": "integer" },
+    "updated_at": { "type": "string" },
+    "trips": { "type": "array", "items": { "type": "string" } },
+    "voters": { "type": "array", "items": { "type": "string" } },
+    "profiles": {
+      "type": "object",
+      "description": "\"*\" = everyone together, plus one entry per voter",
+      "additionalProperties": { "$ref": "#/$defs/profile" }
+    },
+    "explicit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["feature", "weight"],
+        "properties": {
+          "feature": { "type": "string" },
+          "weight": { "type": "number", "minimum": -2, "maximum": 2 },
+          "note": { "type": "string" },
+          "voter": { "type": "string" },
+          "added_at": { "type": "string" }
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["trip", "slug", "voter", "vote", "features"],
+        "properties": {
+          "trip": { "type": "string" },
+          "slug": { "type": "string" },
+          "voter": { "type": "string" },
+          "vote": { "enum": ["like", "unlike"] },
+          "features": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

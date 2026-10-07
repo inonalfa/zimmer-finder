@@ -28,6 +28,9 @@ No backend, no account and no API key needed. Deploy free on GitHub Pages or jus
 - **Couple voting**: like / dislike with a display name, "match" when two people liked it, dislikes hidden.
 - **Map** (Leaflet + OpenStreetMap) with drive times from your home town (OSRM, no traffic).
 - **Filters and sorting**: region, max price, max drive, indoor + outdoor jacuzzi, verified only.
+- **Learns your taste across trips**: votes become a preference profile (`data/preferences.json`). Next
+  trip, every place gets a "Fits you" score with reasons ("Detached unit - you liked 5 of 6 places with
+  it"), you can sort by fit, and the **Your taste** page shows what was learned.
 - **New** badges since your last visit and a **sold out** section.
 - **One tap WhatsApp** with a ready-made availability question (you send it, the agent never does).
 - **English and Hebrew (RTL)**, any currency, one config file.
@@ -91,6 +94,30 @@ flowchart LR
 | Hosting | GitHub Pages, one offline HTML file (`npm run bundle`), or `npm run dev` | Netlify, Vercel, Cloudflare Pages, any static host (`npm run build` > `dist/`) |
 | Recurring checks | your agent's scheduler | `.github/workflows/refresh.yml` cron for the scripts |
 
+## It remembers what you like
+
+![Your taste page](docs/screenshots/taste.png)
+
+Example: in **March** you search for a weekend in the Galilee. You both vote: you like the detached cabins
+with an outdoor jacuzzi, and dislike two rooms right next to the hosts' house. The agent runs
+`zf.py learn` and `zf.py archive`.
+
+In **July** you ask for "a zimmer for our anniversary". The agent reads `data/preferences.json` first and
+says: "From your past trips I assumed: detached unit, outdoor jacuzzi, a view, not next to the hosts' house.
+Say if this trip is different." The new results open with a "Fits you" score and the reasons:
+
+![Card with fit reasons](docs/screenshots/card-fit.png)
+
+How it learns: for every feature (indoor / outdoor jacuzzi, view, pool, detached, next to the hosts, region,
+red flags, long drive, ...) it compares how often it appears in places you liked vs places you disliked,
+with add-one smoothing so one vote does not decide everything (`weight = ln(P(f|like) / P(f|dislike))`,
+clipped to [-2, 2]). It keeps a profile for the two of you together and one per voter. You can always
+tell it directly: `zf.py learn --feature pool --weight 1.5 --note "We want a pool"`. Everything stays in
+your repo; nothing is sent anywhere.
+
+The demo ships a fake past trip (`data/trips/2026-07-golan-example/`) and the profile learned from it.
+`zf.py clear-example --yes` removes both.
+
 ## Configuration
 
 Everything lives in [`trip.config.json`](trip.config.json) (validated by
@@ -125,7 +152,11 @@ Set `"locale": "he"` for a Hebrew right-to-left UI, or add `?lang=he` / `?lang=e
 | `price SLUG TOTAL [--source booking]` | record a checked price and append price history |
 | `sold-out SLUG...` / `available SLUG...` | availability changes |
 | `rank`, `list`, `enrich` | default ranking, a quick table, or geocode + drive + images + rank + validate |
-| `clear-example --yes` | remove the fake demo data |
+| `learn [--votes F \| --from-store] [--feature F --weight W --note T]` | learn the taste profile from votes on all trips (plus explicit notes) |
+| `taste [--voter NAME]` | print what the profile learned |
+| `rank [--voter NAME]` | default ranking, plus `fit_score` / `fit_reasons` when a profile exists |
+| `archive [--votes F]` | move the finished trip to `data/trips/<name>/` |
+| `clear-example --yes` | remove the fake demo data (records, past trip, taste profile) |
 
 `npm run bundle [-- --data file.json --thumbs-only]` builds `dist-single/zimmer-finder.html` with the app, data and photos inside.
 
@@ -187,6 +218,7 @@ Map data (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributo
 - דירוגים מגוגל, Booking ו-Airbnb, סיכום ביקורות ונקודות לתשומת לב
 - הצבעה זוגית עם "התאמה" כששניכם אהבתם
 - מפה עם זמני נסיעה מהעיר שלכם, סינון ומיון
+- לומד את הטעם שלכם מטיול לטיול: ציון "מתאים לכם" עם סיבות, מיון לפי התאמה ודף "הטעם שלכם"
 - כפתור וואטסאפ עם הודעה מוכנה לבדיקת זמינות (אתם שולחים, לא הסוכן)
 - עברית מימין לשמאל או אנגלית, כל מטבע, קובץ הגדרות אחד: `trip.config.json`
 

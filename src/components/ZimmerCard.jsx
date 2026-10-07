@@ -6,6 +6,7 @@ import VoteBar from "./VoteBar";
 import { formatPrice, imagesOf, thumbsOf, featureBadges, finalPrice, perNight } from "@/lib/zimmer-utils";
 import { MatchBadge, NewBadge, PriceStatusChip, CheckedAt, PriceChangeTag, DriveTag } from "./ZimmerExtras";
 import { t } from "@/i18n";
+import { FitBadge, FitReasons } from "./Fit";
 import { NIGHTS } from "@/config";
 
 export default function ZimmerCard({ z, onOpen, voteInfo, onVote, dimmed = false, match = false, isNew = false, soldOut = false }) {
@@ -41,6 +42,7 @@ export default function ZimmerCard({ z, onOpen, voteInfo, onVote, dimmed = false
         )}
         <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col items-end gap-1.5">
           {match && <MatchBadge size="lg" />}
+          <FitBadge z={z} />
           {isNew && !soldOut && <NewBadge />}
           {soldOut && <span className="rounded-full bg-stone-800/85 px-2.5 py-1 text-xs font-semibold text-white">{t("Booked")}</span>}
           {mine === "like" && (
@@ -68,6 +70,7 @@ export default function ZimmerCard({ z, onOpen, voteInfo, onVote, dimmed = false
           )}
           <RatingBadges z={z} className="mt-2" />
         </div>
+        <FitReasons z={z} max={2} compact />
         <div className="flex flex-col gap-1" data-testid="card-price">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>

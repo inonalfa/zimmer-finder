@@ -114,7 +114,9 @@ def main() -> None:
             "has_view": "v" in f or "vp" in f,
             "has_pool": "p" in f or "vp" in f,
             "breakfast": "Breakfast basket on request (example)" if n % 2 else "",
-            "privacy_notes": "Detached unit with its own fenced yard (example).",
+            "privacy_notes": "Next to the hosts' house, shared garden (example)." if n in (3, 6) else "Detached unit with its own fenced yard (example).",
+            "is_detached": n not in (3, 6),
+            "near_host_house": n in (3, 6),
             "price_total": price,
             "price_original": price + 300 if n % 4 == 0 else price,
             "price_status": "verified" if verified else "estimated",
@@ -152,6 +154,57 @@ def main() -> None:
     records = [{k: v for k, v in r.items() if v is not None} for r in records]
     (DATA / "zimmers.json").write_text(json.dumps(records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {len(records)} example records")
+    make_past_trip()
+
+
+PAST = [
+    # slug, name, town, region, price, flags (oj ij v p d=detached h=near host r=red flags), vote Dana, vote Noam
+    ("example-past-pine-hut", "Pine Hut", "Nimrod", "Golan Heights", 3300, "oj v d", "like", "like"),
+    ("example-past-river-suite", "River Suite", "Snir", "Upper Galilee", 2900, "ij h r", "unlike", "unlike"),
+    ("example-past-stone-loft", "Stone Loft", "Katzrin", "Golan Heights", 3600, "oj ij v d", "like", "like"),
+    ("example-past-garden-room", "Garden Room", "Dishon", "Upper Galilee", 2600, "ij h", "unlike", "like"),
+    ("example-past-cliff-cabin", "Cliff Cabin", "Neve Ativ", "Golan Heights", 3900, "oj v p d r", "like", None),
+    ("example-past-meadow-studio", "Meadow Studio", "Yesod HaMa'ala", "Upper Galilee", 2500, "ij", None, "unlike"),
+]
+
+
+def make_past_trip() -> None:
+    """A fake finished trip (July 2026) with votes, so the preference profile has something to learn from."""
+    from zflib.images import make_thumb
+
+    name = "2026-07-golan-example"
+    trip = DATA / "trips" / name
+    recs, votes = [], []
+    for n, (slug, title, town, region, price, flags, dana, noam) in enumerate(PAST, 1):
+        f = set(flags.split())
+        imgs, thumbs = [], []
+        for i in range(2):
+            p = trip / "images" / slug / f"{i + 1}.jpg"
+            draw_scene(p, ["day", "forest", "sunset", "sea", "dusk", "snow"][n - 1], seed=100 + n * 10 + i)
+            t = make_thumb(p)
+            imgs.append(p.relative_to(ROOT).as_posix())
+            thumbs.append(t.relative_to(ROOT).as_posix() if t else None)
+        recs.append({
+            "slug": slug, "name": f"{title} (example)", "town": town, "region": region, "example": True,
+            "description": "FAKE EXAMPLE LISTING from a past trip.",
+            "has_private_jacuzzi": True, "jacuzzi_indoor": "ij" in f, "jacuzzi_outdoor": "oj" in f,
+            "has_view": "v" in f, "has_pool": "p" in f, "has_kitchen": True, "is_detached": "d" in f, "near_host_house": "h" in f,
+            "review_red_flags": "Example: guests mention thin walls." if "r" in f else "",
+            "price_total": price, "price_status": "verified", "check_in": "2026-07-16", "check_out": "2026-07-19",
+            "drive_minutes": 120 + n * 8, "drive_km": 140 + n * 9, "image_urls": imgs, "thumb_urls": thumbs,
+            "availability_status": "verified", "is_active": True, "score": n, "found_date": "2026-07-01",
+        })
+        for voter, v in (("Dana", dana), ("Noam", noam)):
+            if v:
+                votes.append({"zimmer_slug": slug, "voter_name": voter, "vote": v, "updated_at": f"2026-07-0{3 + n % 5}T19:00:00Z"})
+    cfg = json.loads((ROOT / "trip.config.json").read_text(encoding="utf-8"))
+    cfg["trip"] = {"check_in": "2026-07-16", "check_out": "2026-07-19", "adults": 2, "children": 0}
+    for fname, body in (("zimmers.json", recs), ("votes.json", votes), ("trip.config.json", cfg),
+                        ("trip.json", {"id": name, "archived_at": "2026-07-20T09:00:00Z", "places": len(recs), "votes": len(votes),
+                                       "check_in": "2026-07-16", "check_out": "2026-07-19", "example": True})):
+        (trip / fname).write_text(json.dumps(body, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (DATA / "trips" / "index.json").write_text(json.dumps([json.loads((trip / "trip.json").read_text())], indent=2) + "\n", encoding="utf-8")
+    print(f"wrote past trip {name} ({len(recs)} places, {len(votes)} votes)")
 
 
 if __name__ == "__main__":

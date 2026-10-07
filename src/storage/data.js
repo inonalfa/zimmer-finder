@@ -158,3 +158,24 @@ export function loadZimmers(cfg = config.storage.data) {
   if (!fn) return Promise.reject(new Error(`Unknown data adapter "${cfg.adapter}"`));
   return fn(cfg);
 }
+
+// Learned taste profile (data/preferences.json, written by `zf.py learn`). Optional: null when missing.
+// The single-file bundle embeds it as <script id="zimmer-prefs" type="application/json">.
+export async function loadPreferences(fetchImpl = (...a) => fetch(...a), doc = globalThis.document) {
+  const el = doc && doc.getElementById("zimmer-prefs");
+  if (el) {
+    try {
+      return JSON.parse(el.textContent || "null");
+    } catch {
+      return null;
+    }
+  }
+  try {
+    const res = await fetchImpl(resolveUrl("data/preferences.json"), { cache: "no-cache" });
+    if (!res.ok) return null;
+    const body = await res.json();
+    return body && typeof body === "object" && body.profiles ? body : null;
+  } catch {
+    return null;
+  }
+}

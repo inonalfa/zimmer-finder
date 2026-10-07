@@ -157,7 +157,7 @@ def mark_available(rec: dict, verified: bool = True, reason: str = "", on: str |
 def rank(records: list[dict], budget: float | None = None, weights: dict | None = None) -> list[dict]:
     """Default ranking (score 1 = best): available first, then must-have fit, rating, price and drive time.
     Agents can overwrite `score` with their own judgement; this is a sensible fallback."""
-    w = {"both_jacuzzi": 2.0, "rating": 1.5, "price": 1.0, "drive": 0.5, **(weights or {})}
+    w = {"both_jacuzzi": 2.0, "rating": 1.5, "price": 1.0, "drive": 0.5, "fit": 1.5, **(weights or {})}
 
     def price(r):
         return r.get("price_total") if isinstance(r.get("price_total"), (int, float)) else r.get("price_estimate")
@@ -179,6 +179,8 @@ def rank(records: list[dict], budget: float | None = None, weights: dict | None 
         d = r.get("drive_minutes")
         if isinstance(d, (int, float)):
             v -= w["drive"] * d / 120
+        if isinstance(r.get("fit_score"), (int, float)):  # personal fit from preferences.json
+            v += w["fit"] * (r["fit_score"] - 50) / 25
         if r.get("availability_status") == "unavailable" or r.get("is_active") is False:
             v -= 100
         return v
