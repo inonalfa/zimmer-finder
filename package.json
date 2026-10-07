@@ -1,6 +1,6 @@
 {
   "name": "zimmer-finder",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Agent-powered vacation rental finder: your AI agent searches, a static web app shows the results with photos, prices, map and couple voting.",
   "license": "MIT",

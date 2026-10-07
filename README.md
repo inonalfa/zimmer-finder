@@ -34,7 +34,9 @@ No backend, no account and no API key needed. Deploy free on GitHub Pages or jus
 
 ## Quick start
 
-1. **Fork** this repo (or click **Use this template**). Open the **Actions** tab once and enable workflows.
+1. **Copy the repo** - click **Use this template > Create a new repository** (recommended: Actions work
+   right away). A fork also works, but forks start with Actions and Pages turned off. Then
+   [turn on your site](#turn-on-your-site-one-time-about-1-minute) once.
 2. **Tell your agent** (any agent, in your fork or with the repo link):
    > Read AGENTS.md and find us a zimmer for next weekend, 2 adults, budget 2000, and give me the app link.
 3. **Open the link** the agent gives you and vote with your partner.
@@ -48,6 +50,20 @@ first delivery path it can:
 | push to your repo | your own site: `https://<you>.github.io/zimmer-finder/` (GitHub Pages, deployed by the included workflow) |
 | run commands only | one file, `zimmer-finder.html` (`npm run bundle`): double-click, works offline |
 | only chat | a `zimmers.json` to open in the hosted viewer: [inonalfa.github.io/zimmer-finder](https://inonalfa.github.io/zimmer-finder/) > **Load data** (or a `?data=<raw-url>` link) |
+
+### Turn on your site (one time, about 1 minute)
+
+Without this step your `https://<you>.github.io/<repo>/` link shows **404**.
+
+![Settings > Pages > Source: GitHub Actions, enable Actions on forks, then run the deploy workflow](docs/screenshots/setup-pages.png)
+
+1. **Settings > Pages > Build and deployment > Source: GitHub Actions** (not "Deploy from a branch").
+2. **Forks only:** open the **Actions** tab and click **I understand my workflows, go ahead and enable them**.
+3. **Actions > Deploy to GitHub Pages > Run workflow**, wait about a minute for the green check, then open
+   `https://<you>.github.io/<repo>/`.
+
+After that every push to `main` (for example by your agent) redeploys the site automatically. With the
+GitHub CLI: `gh api -X POST repos/<you>/<repo>/pages -f build_type=workflow && gh workflow run deploy.yml`.
 
 Want to see it first? Open the [live demo](https://inonalfa.github.io/zimmer-finder/) with example data,
 or run `npm install && npm run dev`.
@@ -150,9 +166,17 @@ Map data (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributo
 
 ### מתחילים ב-3 צעדים
 
-1. **עושים Fork** לפרויקט, ופעם אחת מאשרים את ה-Workflows בלשונית Actions.
+1. **מעתיקים את הפרויקט** - לוחצים **Use this template > Create a new repository** (מומלץ, כי ה-Actions עובדים מיד). אפשר גם Fork, אבל ב-Fork ה-Actions וה-Pages כבויים בהתחלה.
 2. **כותבים לסוכן**: "תקרא את AGENTS.md ותמצא לנו צימר לסוף השבוע הבא, זוג, תקציב 2000, ותן לי קישור לאפליקציה."
 3. **פותחים את הקישור** שהסוכן נותן ומצביעים.
+
+**מפעילים את האתר (פעם אחת, בערך דקה)** - בלי זה הקישור יחזיר 404:
+
+- **Settings > Pages > Source: GitHub Actions** (לא Deploy from a branch).
+- **רק ב-Fork:** בלשונית **Actions** לוחצים **I understand my workflows, go ahead and enable them**.
+- **Actions > Deploy to GitHub Pages > Run workflow**, מחכים בערך דקה לסימן הירוק, ופותחים את `https://<you>.github.io/<repo>/`.
+
+יש איור של השלבים למעלה, בחלק "Turn on your site". מכאן והלאה כל דחיפה ל-main מעדכנת את האתר אוטומטית.
 
 הסוכן חייב לסיים עם אפליקציה שאפשר לפתוח, לא רק עם דוח. אם הוא יכול לדחוף ל-GitHub, תקבלו אתר משלכם ב-GitHub Pages. אם הוא רק מריץ פקודות, תקבלו קובץ HTML אחד שנפתח בלחיצה כפולה. אם הוא סוכן צ'אט בלבד, תקבלו קובץ zimmers.json, ופותחים אותו ב-[אפליקציה המתארחת](https://inonalfa.github.io/zimmer-finder/?lang=he) דרך הכפתור "טעינת נתונים".
 

@@ -3,6 +3,18 @@
 All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org).
 
+## [1.1.1] - 2026-10-07
+
+### Added
+- README (English and Hebrew): "Turn on your site" one-time steps with an annotated illustration
+  (`docs/screenshots/setup-pages.png`); **Use this template** recommended over Fork.
+- Deploy workflow checks first that GitHub Pages is enabled with source "GitHub Actions" and fails with a
+  clear message and the settings link when it is not (common on forks).
+
+### Changed
+- `AGENTS.md` path A: the agent checks / enables Pages, runs the deploy, waits for it and verifies the URL
+  returns 200 before sharing it; otherwise it delivers with path B or C and gives the setup steps.
+
 ## [1.1.0] - 2026-10-07
 
 ### Added

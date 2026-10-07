@@ -1,6 +1,7 @@
 name: Deploy to GitHub Pages
 
-# One-time setup: repo Settings > Pages > Source: "GitHub Actions".
+# One-time setup: Settings > Pages > Source: "GitHub Actions" (forks: also enable Actions in the Actions tab).
+# Runs on every push to main and manually (Actions > Deploy to GitHub Pages > Run workflow).
 on:
   push:
     branches: [main]
@@ -19,6 +20,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check that GitHub Pages is enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! info=$(gh api "repos/${{ github.repository }}/pages" 2>/dev/null); then
+            echo "::error title=GitHub Pages is not enabled::Open https://github.com/${{ github.repository }}/settings/pages , set Source to 'GitHub Actions', then run this workflow again (Actions > Deploy to GitHub Pages > Run workflow). See README > Turn on your site."
+            exit 1
+          fi
+          if [ "$(echo "$info" | jq -r .build_type)" != "workflow" ]; then
+            echo "::error title=Pages source is not GitHub Actions::Open https://github.com/${{ github.repository }}/settings/pages and change Source from 'Deploy from a branch' to 'GitHub Actions', then run this workflow again."
+            exit 1
+          fi
+          echo "Pages is enabled: $(echo "$info" | jq -r .html_url)"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:

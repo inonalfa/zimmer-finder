@@ -17,7 +17,7 @@ summary is welcome, but it does not replace the app. You are done only when all 
 
 | You can... | Deliver | Give the user |
 | --- | --- | --- |
-| **A.** push to the user's GitHub repo | commit `data/` (JSON + images) and push to `main`; the Pages workflow deploys | the link `https://<owner>.github.io/<repo>/` |
+| **A.** push to the user's GitHub repo | commit `data/` (JSON + images) and push to `main`; the Pages workflow deploys | the link `https://<owner>.github.io/<repo>/` - only after it returns 200 (step 7A) |
 | **B.** run commands, but not push | `npm install && npm run bundle` | the file `dist-single/zimmer-finder.html` as an attachment (opens by double-click, works offline) |
 | **C.** only chat (no code, no files) | output the complete `zimmers.json` (a file attachment, or one JSON code block) | the viewer link `https://inonalfa.github.io/zimmer-finder/` + "tap **Load data** and choose / paste the file". If the user agrees to a public Gist, give `https://inonalfa.github.io/zimmer-finder/?data=<raw gist URL>` instead - one click. |
 
@@ -171,16 +171,35 @@ git commit -m "data: search results for <dates>"
 git push origin main
 ```
 
-The `Deploy to GitHub Pages` workflow publishes the site. The first time only, Pages must be enabled with
-source "GitHub Actions": *Settings > Pages > Source: GitHub Actions*, or with the GitHub CLI:
+The `Deploy to GitHub Pages` workflow publishes the site. **Never hand over a link you have not seen
+return HTTP 200.** Forks and new repos often have Pages (and on forks, Actions) turned off, and the link is
+then a 404. Before you give the link:
 
 ```bash
-gh api -X POST repos/<owner>/<repo>/pages -f build_type=workflow   # once; "already exists" is fine
-gh run watch "$(gh run list --workflow deploy.yml --limit 1 --json databaseId -q '.[0].databaseId')"
+R=<owner>/<repo>
+# 1. Pages enabled with source "GitHub Actions"? Enable it if not (needs admin rights on the repo).
+gh api "repos/$R/pages" -q .build_type 2>/dev/null \
+  || gh api -X POST "repos/$R/pages" -f build_type=workflow
+gh api -X PUT "repos/$R/pages" -f build_type=workflow 2>/dev/null || true   # if it was "legacy"
+# 2. Run the deploy and wait for it
+gh workflow enable deploy.yml -R "$R" 2>/dev/null || true
+gh workflow run deploy.yml -R "$R" --ref main
+sleep 5
+gh run watch "$(gh run list -R "$R" --workflow deploy.yml --limit 1 --json databaseId -q '.[0].databaseId')" --exit-status
+# 3. The site must answer 200 (it can take a minute after the run)
+curl -s -o /dev/null -w "%{http_code}\n" "https://<owner>.github.io/<repo>/"
 ```
 
-On a fork, also enable Actions once (*Actions tab > "I understand my workflows, go ahead and enable them"*).
-Give the user `https://<owner>.github.io/<repo>/` (add `?lang=he` for Hebrew if the config is English).
+Only when step 3 prints `200`, give the user `https://<owner>.github.io/<repo>/` (add `?lang=he` for Hebrew
+if the config is English).
+
+If you cannot do steps 1-2 (no `gh`, no admin rights, Actions disabled on a fork), **deliver with path B or C
+right now** so the user has an app today, and give them these exact one-time steps for their own site:
+
+1. Settings > Pages > Build and deployment > Source: **GitHub Actions**.
+2. Forks only: Actions tab > **I understand my workflows, go ahead and enable them**.
+3. Actions > **Deploy to GitHub Pages** > **Run workflow**, wait for the green check, then open
+   `https://<owner>.github.io/<repo>/`.
 
 ### B. You can run commands, but cannot push
 
@@ -215,6 +234,7 @@ without it votes stay in each browser.
 - [ ] `trip.config.json` matches the request (absolute dates, budget, guests, origin, language)
 - [ ] `python3 scripts/zf.py validate` prints 0 problems
 - [ ] The app is delivered (path A, B or C) and your final message has the link or the attached file
+- [ ] Path A: you saw the Pages URL return 200 (never hand over a 404 link)
 - [ ] `npm test` and `npm run build` pass if you touched code
 - [ ] No secrets, cookies or personal data in `data/` or the config
 - [ ] Every `verified` price and availability was checked for the exact dates
