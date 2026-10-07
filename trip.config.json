@@ -31,39 +31,15 @@
     "country": "Israel",
     "country_code": "IL",
     "phone_country_code": "972",
-    "mobile_prefixes": [
-      "5"
-    ],
-    "areas": [
-      "Upper Galilee",
-      "Golan Heights",
-      "Western Galilee",
-      "Carmel"
-    ],
-    "map_center": [
-      32.9,
-      35.4
-    ],
+    "mobile_prefixes": ["5"],
+    "areas": ["Upper Galilee", "Golan Heights", "Western Galilee", "Carmel"],
+    "map_center": [32.9, 35.4],
     "map_zoom": 8,
     "max_drive_minutes": 180
   },
-  "must_have": [
-    "private jacuzzi",
-    "kitchen or kitchenette",
-    "privacy (not overlooked by neighbours)"
-  ],
-  "nice_to_have": [
-    "indoor and outdoor jacuzzi",
-    "BBQ",
-    "view",
-    "private pool"
-  ],
-  "sources": [
-    "airbnb",
-    "booking",
-    "local listing sites",
-    "google maps reviews"
-  ],
+  "must_have": ["private jacuzzi", "kitchen or kitchenette", "privacy (not overlooked by neighbours)"],
+  "nice_to_have": ["indoor and outdoor jacuzzi", "BBQ", "view", "private pool"],
+  "sources": ["airbnb", "booking", "local listing sites", "google maps reviews"],
   "storage": {
     "data": {
       "adapter": "json",
