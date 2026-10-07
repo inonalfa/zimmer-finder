@@ -2,6 +2,7 @@ import { cpSync, existsSync, readFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 const DATA_DIR = resolve(__dirname, "data");
 const TYPES = {
@@ -38,14 +39,17 @@ function dataDir() {
 }
 
 // BASE_PATH lets GitHub Pages serve the app from /<repo>/ (set by the deploy workflow).
-export default defineConfig({
+// `vite build --mode single` (used by `npm run bundle`) inlines all JS and CSS into one HTML file;
+// scripts/bundle.mjs then embeds the data and photos.
+export default defineConfig(({ mode }) => ({
   base: process.env.BASE_PATH || "./",
-  plugins: [react(), dataDir()],
+  plugins: mode === "single" ? [react(), viteSingleFile()] : [react(), dataDir()],
+  build: mode === "single" ? { outDir: "dist-single", emptyOutDir: true, chunkSizeWarningLimit: 5000 } : {},
   resolve: { alias: { "@": resolve(__dirname, "src") } },
   test: {
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.js"],
-    include: ["src/**/*.test.{js,jsx}"],
+    include: ["src/**/*.test.{js,jsx}", "scripts/**/*.test.mjs"],
   },
-});
+}));

@@ -17,3 +17,4 @@ __pycache__/
 tmp/
 *.tmp.json
 .tmp-*
+dist-single/

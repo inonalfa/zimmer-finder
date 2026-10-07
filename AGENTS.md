@@ -2,9 +2,31 @@
 
 This file tells any coding or research agent (Claude Code, Cursor, Codex, ChatGPT with tools, Grok Bot,
 Gemini CLI, Aider, ...) how to run a vacation rental search with this repo. Humans: you can give your agent
-a one-line instruction such as *"Read AGENTS.md and find us a place for the trip in trip.config.json"*.
+a one-line instruction such as *"Read AGENTS.md and find us a zimmer for next weekend, budget 2000, and give
+me the app link"*.
 
-## Ground rules (read first)
+## Definition of done (read this first)
+
+**The result of every search is an app the user can open - never only a report.** A markdown or chat
+summary is welcome, but it does not replace the app. You are done only when all of these are true:
+
+1. `trip.config.json` reflects the user's request (step 1 below).
+2. `data/zimmers.json` holds the results and passes validation (`python3 scripts/zf.py validate` prints
+   `0 problems`; without Python, follow `schema/zimmer.schema.json` exactly).
+3. The app shows those results, delivered with **the first path below that you can do**:
+
+| You can... | Deliver | Give the user |
+| --- | --- | --- |
+| **A.** push to the user's GitHub repo | commit `data/` (JSON + images) and push to `main`; the Pages workflow deploys | the link `https://<owner>.github.io/<repo>/` |
+| **B.** run commands, but not push | `npm install && npm run bundle` | the file `dist-single/zimmer-finder.html` as an attachment (opens by double-click, works offline) |
+| **C.** only chat (no code, no files) | output the complete `zimmers.json` (a file attachment, or one JSON code block) | the viewer link `https://inonalfa.github.io/zimmer-finder/` + "tap **Load data** and choose / paste the file". If the user agrees to a public Gist, give `https://inonalfa.github.io/zimmer-finder/?data=<raw gist URL>` instead - one click. |
+
+4. Your last message contains **a clickable link or the attached file**, plus a 3-5 line summary
+   (top picks, what is unverified, which sources failed).
+
+Details for each path are in [step 7](#7-deliver-the-app-mandatory).
+
+## Ground rules
 
 1. **Never contact hosts, never book, never pay, never submit forms or create accounts.** You research and
    prepare; the user decides and reaches out. The app has a prefilled WhatsApp button the *user* can tap.
@@ -27,10 +49,22 @@ pip install pillow          # optional, for thumbnails
 python3 scripts/zf.py clear-example --yes   # remove the fake demo records
 ```
 
-Read `trip.config.json`. If something the search needs is missing (dates, guests, budget, origin, region,
-must-haves), ask the user once, then write it into `trip.config.json`.
+## 1. Read and update the config (before searching)
 
-## 1. Search wide
+Read `trip.config.json` first. Translate the user's request into it and **save it before you search**:
+
+- "next weekend" -> real dates: `trip.check_in` (Friday) and `trip.check_out` (Sunday) in `YYYY-MM-DD`,
+  computed from today's date. Always write absolute dates.
+- "budget 2000" -> `budget.max_total: 2000` (total for the stay, in `app.currency`).
+- guests -> `trip.adults` / `trip.children`; "from Haifa" -> `origin.name` (and `lat` / `lng` if you know them).
+- areas, must-haves, nice-to-haves, language (`app.locale`: `he` for Hebrew, `en` for English).
+
+Ask the user only about things you cannot infer and that change the search (for example the number of
+guests). If the user wrote in Hebrew, set `app.locale` to `he` and write summaries and reviews in Hebrew.
+If `data/zimmers.json` still holds the fake example records (`"example": true`), remove them first:
+`python3 scripts/zf.py clear-example --yes` (or replace the file with your results).
+
+## 2. Search wide
 
 Search every source in `sources`, for the exact `trip.check_in` / `trip.check_out` and guest count:
 
@@ -52,7 +86,7 @@ Tips:
 - Collect photos of **that unit** only, largest size, no logos, maps or people. Keep the source URLs in
   `image_urls`; the images script downloads them.
 
-## 2. Write the records
+## 3. Write the records
 
 Each record follows [`schema/zimmer.schema.json`](schema/zimmer.schema.json). The important fields:
 
@@ -82,7 +116,7 @@ by slug, listing URL, and phone + town + unit, keeps `found_date`, and appends `
 python3 scripts/zf.py merge /tmp/search-results.json
 ```
 
-## 3. Enrich and validate
+## 4. Enrich and validate
 
 ```bash
 python3 scripts/zf.py enrich      # geocode towns (Nominatim), drive times from origin (OSRM),
@@ -95,22 +129,16 @@ Individual steps: `geocode`, `drive`, `images [--slug S]`, `rank`. Nominatim and
 services: the scripts send a User-Agent, wait 1 second between geocoding calls and cache results. Set
 `ZF_USER_AGENT` to something that identifies you, and do not run them in tight loops.
 
-## 4. Rank and present
+## 5. Rank and present
 
 Rank by fit to `must_have` first, then `nice_to_have`, then review quality, price and drive time. Flag
 anything over `budget.max_total` (`within_budget: false`). `zf.py rank` gives a sensible default; feel free
 to set `score` yourself and explain why in `notes`.
 
-Show the result:
+Then **deliver the app (step 7)**. Your summary for the user goes next to the link: the top 3-5 with
+price, status and the main pro and con, what you could not verify, and which sources failed.
 
-```bash
-npm run dev        # http://localhost:5173
-```
-
-Summarise for the user: the top 3-5 with price, status and the main pro and con, what you could not verify,
-and which sources failed.
-
-## 5. Keep it fresh (recurring checks)
+## 6. Keep it fresh (recurring checks)
 
 Prices and availability change daily. Two routines work well:
 
@@ -120,7 +148,7 @@ Prices and availability change daily. Two routines work well:
   python3 scripts/zf.py sold-out <slug> --reason "no availability on Airbnb and Booking"
   python3 scripts/zf.py available <slug> --reason "available again on Booking"
   ```
-- **Twice a week**: run steps 1-3 again to find new places.
+- **Twice a week**: run steps 2-4 again to find new places.
 
 Tell the user only about real changes: new matches, sold out, a meaningful price change, new places. Stop
 the routines after the trip dates or when the user has booked.
@@ -130,15 +158,63 @@ entry that starts your agent CLI with this file, or the included GitHub Actions 
 (`.github/workflows/refresh.yml`), which runs the **network scripts** (geocode, drive, images, validate) on a
 schedule and commits the result. Searching listing sites still needs an agent.
 
-## 6. Publish
+## 7. Deliver the app (mandatory)
 
-Commit `data/` and push. The `Deploy` workflow builds the site and publishes it to GitHub Pages (enable
-Pages with source "GitHub Actions" once). Votes: see [docs/votes-supabase.md](docs/votes-supabase.md) for
-shared votes between two phones.
+Pick the first path you can do. Do not stop at a report.
+
+### A. You can push to the user's GitHub repo
+
+```bash
+python3 scripts/zf.py validate
+git add trip.config.json data/
+git commit -m "data: search results for <dates>"
+git push origin main
+```
+
+The `Deploy to GitHub Pages` workflow publishes the site. The first time only, Pages must be enabled with
+source "GitHub Actions": *Settings > Pages > Source: GitHub Actions*, or with the GitHub CLI:
+
+```bash
+gh api -X POST repos/<owner>/<repo>/pages -f build_type=workflow   # once; "already exists" is fine
+gh run watch "$(gh run list --workflow deploy.yml --limit 1 --json databaseId -q '.[0].databaseId')"
+```
+
+On a fork, also enable Actions once (*Actions tab > "I understand my workflows, go ahead and enable them"*).
+Give the user `https://<owner>.github.io/<repo>/` (add `?lang=he` for Hebrew if the config is English).
+
+### B. You can run commands, but cannot push
+
+```bash
+npm install
+npm run bundle        # -> dist-single/zimmer-finder.html (app + data + photos in ONE file)
+```
+
+Attach `dist-single/zimmer-finder.html` to your answer. The user opens it by double-click on a computer or
+phone; it needs no server (map tiles load when online). Big photo sets fall back to thumbnails to keep the
+file small (`--max-mb`, `--thumbs-only`). If you cannot attach files but can run a local server, `npm run dev`
+and give `http://localhost:5173` only when the user is on the same machine.
+
+### C. You can only chat
+
+Write the complete records as JSON that follows `schema/zimmer.schema.json` (remote `image_urls` are fine)
+and give it as a downloadable `zimmers.json` file, or as a single fenced JSON code block. Then tell the user:
+
+> Open https://inonalfa.github.io/zimmer-finder/ , tap **Load data** (טעינת נתונים), and choose the file or
+> paste the JSON.
+
+If the user agrees to a public link and you can publish a Gist or any URL that allows cross-origin reads, give a one-click link instead:
+`https://inonalfa.github.io/zimmer-finder/?data=<URL-encoded raw URL>`. GitHub `blob` and Gist page links
+are converted to raw links automatically. The user's own fork works the same way at
+`https://<owner>.github.io/<repo>/`.
+
+Shared votes between two phones need the Supabase option ([docs/votes-supabase.md](docs/votes-supabase.md));
+without it votes stay in each browser.
 
 ## Checklist before you finish
 
+- [ ] `trip.config.json` matches the request (absolute dates, budget, guests, origin, language)
 - [ ] `python3 scripts/zf.py validate` prints 0 problems
+- [ ] The app is delivered (path A, B or C) and your final message has the link or the attached file
 - [ ] `npm test` and `npm run build` pass if you touched code
 - [ ] No secrets, cookies or personal data in `data/` or the config
 - [ ] Every `verified` price and availability was checked for the exact dates

@@ -1,5 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from "react";
-import { loadZimmers } from "@/storage/data";
+import { loadAll, saveCustom, clearCustom } from "@/storage/data";
+import LoadDataDialog from "@/components/LoadDataDialog";
 import {
   CalendarDays,
   SlidersHorizontal,
@@ -14,6 +15,7 @@ import {
   EyeOff,
   Map as MapIcon,
   ChevronDown,
+  Upload,
 } from "lucide-react";
 import ZimmerCard from "@/components/ZimmerCard";
 import ZimmerDetail from "@/components/ZimmerDetail";
@@ -78,6 +80,8 @@ export default function App() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [dataInfo, setDataInfo] = useState({ source: "default" }); // where the records came from
+  const [loadDialog, setLoadDialog] = useState(false);
   const [selected, setSelected] = useState(null);
 
   const [region, setRegion] = useState("");
@@ -138,10 +142,16 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const data = await loadZimmers();
-        setItems(Array.isArray(data) ? data : []);
+        const r = await loadAll();
+        setItems(r.records);
+        setDataInfo({ source: r.source, label: r.label });
       } catch (e) {
-        setError(t("Could not load the places. Try refreshing the page."));
+        const fromUrl = new URLSearchParams(window.location.search).get("data");
+        setError(
+          fromUrl
+            ? t("Could not load the data from {url}: {error}", { url: fromUrl, error: e.message })
+            : t("Could not load the places. Try refreshing the page."),
+        );
       } finally {
         setLoading(false);
       }
@@ -249,6 +259,31 @@ export default function App() {
     }
   }, []);
 
+  const onLoaded = ({ records, source, label, url }) => {
+    setItems(records);
+    setDataInfo({ source, label });
+    setError(null);
+    setSelected(null);
+    setLoadDialog(false);
+    const q = new URLSearchParams(window.location.search);
+    if (source === "url" && url) {
+      clearCustom();
+      q.set("data", url); // shareable link
+    } else {
+      q.delete("data");
+      saveCustom(records, label);
+    }
+    const qs = q.toString();
+    history.replaceState(history.state, "", window.location.pathname + (qs ? "?" + qs : ""));
+  };
+  const backToDefault = () => {
+    clearCustom();
+    const q = new URLSearchParams(window.location.search);
+    q.delete("data");
+    const qs = q.toString();
+    window.location.href = window.location.pathname + (qs ? "?" + qs : "");
+  };
+
   const reset = () => {
     setRegion("");
     setMaxPrice(null);
@@ -302,6 +337,13 @@ export default function App() {
                 </span>
               )}
               <button
+                onClick={() => setLoadDialog(true)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-2 text-sm text-stone-700 hover:border-orange-300"
+                title={t("Open results your agent gave you (file, paste or link)")}
+              >
+                <Upload className="h-4 w-4 text-orange-600" /> {t("Load data")}
+              </button>
+              <button
                 onClick={() => setNameDialog({ rename: true })}
                 className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-2 text-sm text-stone-700 hover:border-orange-300"
                 title={t("Change the name shown next to your votes")}
@@ -346,6 +388,17 @@ export default function App() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+        {(dataInfo.source === "url" || dataInfo.source === "custom") && (
+          <div
+            data-testid="data-banner"
+            className="mb-4 flex flex-wrap items-center gap-2 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-2 text-sm text-sky-900"
+          >
+            <span className="min-w-0 truncate">{t("Showing your loaded data: {name}", { name: dataInfo.label || "" })}</span>
+            <button onClick={backToDefault} className="ms-auto font-semibold text-sky-800 hover:underline">
+              {t("Back to the default data")}
+            </button>
+          </div>
+        )}
         {/* Filters */}
         <div className="mb-6 rounded-2xl border border-stone-200/70 bg-white p-4 shadow-sm">
           <div className="flex items-center justify-between sm:hidden">
@@ -490,6 +543,14 @@ export default function App() {
                 {t("Reset filters")}
               </button>
             )}
+            {!items.length && (
+              <button
+                onClick={() => setLoadDialog(true)}
+                className="mt-4 rounded-xl bg-orange-600 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-700"
+              >
+                {t("Load data")}
+              </button>
+            )}
           </div>
         ) : view === "gallery" ? (
           <GalleryView groups={galleryGroups} onOpen={openViewer} infoFor={infoFor} />
@@ -580,6 +641,8 @@ export default function App() {
           isNew={isNewSince(selected, baseline)}
         />
       )}
+
+      {loadDialog && <LoadDataDialog onLoaded={onLoaded} onClose={() => setLoadDialog(false)} />}
 
       {nameDialog && <NameDialog initial={myName} onSave={saveName} onClose={() => setNameDialog(null)} />}
 

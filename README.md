@@ -34,18 +34,23 @@ No backend, no account and no API key needed. Deploy free on GitHub Pages or jus
 
 ## Quick start
 
-1. **Get the code** - click **Use this template** (or fork), then clone your copy:
-   ```bash
-   git clone https://github.com/<you>/zimmer-finder && cd zimmer-finder && npm install
-   ```
-2. **Ask your agent** - open the folder in your agent and say:
-   > Read AGENTS.md. We are 2 adults, 11-14 March, budget 4,500, from Haifa, must have a private jacuzzi. Find us a place.
+1. **Fork** this repo (or click **Use this template**). Open the **Actions** tab once and enable workflows.
+2. **Tell your agent** (any agent, in your fork or with the repo link):
+   > Read AGENTS.md and find us a zimmer for next weekend, 2 adults, budget 2000, and give me the app link.
+3. **Open the link** the agent gives you and vote with your partner.
 
-   The agent updates `trip.config.json`, clears the example data, searches, and writes `data/zimmers.json`.
-3. **Look and vote** - `npm run dev` and open http://localhost:5173, or push to GitHub: the included
-   workflow publishes the site to GitHub Pages (Settings > Pages > Source: *GitHub Actions*, once).
+The agent turns your request into `trip.config.json`, searches, validates `data/zimmers.json`, and must end
+with an app you can open ([Definition of done](AGENTS.md#definition-of-done-read-this-first)), using the
+first delivery path it can:
 
-Want to see it first? Step 1 plus `npm run dev` shows the example data.
+| Agent can... | You get |
+| --- | --- |
+| push to your repo | your own site: `https://<you>.github.io/zimmer-finder/` (GitHub Pages, deployed by the included workflow) |
+| run commands only | one file, `zimmer-finder.html` (`npm run bundle`): double-click, works offline |
+| only chat | a `zimmers.json` to open in the hosted viewer: [inonalfa.github.io/zimmer-finder](https://inonalfa.github.io/zimmer-finder/) > **Load data** (or a `?data=<raw-url>` link) |
+
+Want to see it first? Open the [live demo](https://inonalfa.github.io/zimmer-finder/) with example data,
+or run `npm install && npm run dev`.
 
 ## How it works
 
@@ -65,9 +70,9 @@ flowchart LR
 
 | Piece | Default | Optional |
 | --- | --- | --- |
-| Data | `data/zimmers.json` (JSON file in the repo) | Base44 entity ([integrations/base44](integrations/base44)) |
+| Data | `data/zimmers.json` (JSON file in the repo), or any JSON via **Load data** / `?data=<url>` | Base44 entity ([integrations/base44](integrations/base44)) |
 | Votes | browser `localStorage` | Supabase free tier ([docs/votes-supabase.md](docs/votes-supabase.md)), Base44 |
-| Hosting | `npm run dev` or GitHub Pages | Netlify, Vercel, Cloudflare Pages, any static host (`npm run build` > `dist/`) |
+| Hosting | GitHub Pages, one offline HTML file (`npm run bundle`), or `npm run dev` | Netlify, Vercel, Cloudflare Pages, any static host (`npm run build` > `dist/`) |
 | Recurring checks | your agent's scheduler | `.github/workflows/refresh.yml` cron for the scripts |
 
 ## Configuration
@@ -106,6 +111,8 @@ Set `"locale": "he"` for a Hebrew right-to-left UI, or add `?lang=he` / `?lang=e
 | `rank`, `list`, `enrich` | default ranking, a quick table, or geocode + drive + images + rank + validate |
 | `clear-example --yes` | remove the fake demo data |
 
+`npm run bundle [-- --data file.json --thumbs-only]` builds `dist-single/zimmer-finder.html` with the app, data and photos inside.
+
 ## Development
 
 ```bash
@@ -143,9 +150,11 @@ Map data (c) [OpenStreetMap](https://www.openstreetmap.org/copyright) contributo
 
 ### מתחילים ב-3 צעדים
 
-1. **מעתיקים את הקוד** - לוחצים על Use this template (או Fork), משכפלים ומריצים `npm install`.
-2. **מבקשים מהסוכן** - פותחים את התיקייה בסוכן וכותבים למשל: "תקרא את AGENTS.md. אנחנו זוג, 11-14 במרץ, תקציב 4,500 ש"ח, יוצאים מחיפה, חובה ג'קוזי פרטי. תמצא לנו צימר."
-3. **צופים ומצביעים** - מריצים `npm run dev`, או דוחפים ל-GitHub והאתר עולה ל-GitHub Pages אוטומטית.
+1. **עושים Fork** לפרויקט, ופעם אחת מאשרים את ה-Workflows בלשונית Actions.
+2. **כותבים לסוכן**: "תקרא את AGENTS.md ותמצא לנו צימר לסוף השבוע הבא, זוג, תקציב 2000, ותן לי קישור לאפליקציה."
+3. **פותחים את הקישור** שהסוכן נותן ומצביעים.
+
+הסוכן חייב לסיים עם אפליקציה שאפשר לפתוח, לא רק עם דוח. אם הוא יכול לדחוף ל-GitHub, תקבלו אתר משלכם ב-GitHub Pages. אם הוא רק מריץ פקודות, תקבלו קובץ HTML אחד שנפתח בלחיצה כפולה. אם הוא סוכן צ'אט בלבד, תקבלו קובץ zimmers.json, ופותחים אותו ב-[אפליקציה המתארחת](https://inonalfa.github.io/zimmer-finder/?lang=he) דרך הכפתור "טעינת נתונים".
 
 ### מה יש באפליקציה
 

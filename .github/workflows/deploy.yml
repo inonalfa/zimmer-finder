@@ -33,6 +33,8 @@ jobs:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
           VITE_VOTES_TRIP_ID: ${{ vars.VITE_VOTES_TRIP_ID }}
+      - name: Offline single-file copy (download link: <site>/zimmer-finder.html)
+        run: npm run bundle && cp dist-single/zimmer-finder.html dist/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

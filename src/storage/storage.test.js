@@ -49,7 +49,7 @@ describe("json data adapter", () => {
   it("resolves relative image paths against the app base", async () => {
     const fetch = vi.fn(async () => ({
       ok: true,
-      json: async () => [{ slug: "a", image_urls: ["data/images/a/1.jpg", "https://cdn/x.jpg"], thumb_urls: [] }],
+      json: async () => [{ slug: "a", name: "A", image_urls: ["data/images/a/1.jpg", "https://cdn/x.jpg"], thumb_urls: [] }],
     }));
     const [z] = await loadJson({ url: "data/zimmers.json" }, fetch);
     expect(fetch.mock.calls[0][0]).toBe("/data/zimmers.json");
